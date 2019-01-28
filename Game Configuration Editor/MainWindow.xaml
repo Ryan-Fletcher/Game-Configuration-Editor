@@ -1,0 +1,27 @@
+﻿<Window x:Class="Game_Configuration_Editor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Game_Configuration_Editor"
+        mc:Ignorable="d"
+        Title="GEST" Height="600" Width="800">
+    <Grid>
+        <Canvas x:Name="cvsConfigScreen" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="343" Margin="439,10,0,0"/>
+        <Canvas x:Name="cvsInstalledGamesScreen" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="424" Margin="10,10,0,0"/>
+
+        <GroupBox x:Name="grbFormats" Header="File Format" HorizontalAlignment="Left" Height="126" VerticalAlignment="Top" Width="156" Margin="10,433,0,0">
+            <Grid HorizontalAlignment="Left" Margin="0,0,-2,-12" Width="146" Height="116" VerticalAlignment="Top">
+                <CheckBox x:Name="chbINI" Content="INI" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="format_Checked" Margin="0,11,0,0"/>
+                <CheckBox x:Name="chbCNF" Content="CNF" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,31,0,0" Checked="format_Checked"/>
+                <CheckBox x:Name="chbCFG" Content="CFG" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,51,0,0" Checked="format_Checked"/>
+                <CheckBox x:Name="chbXML" Content="XML" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,71,0,0" Checked="format_Checked"/>
+                <CheckBox x:Name="chbJSON" Content="JSON" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,91,0,0" Checked="format_Checked"/>
+            </Grid>
+        </GroupBox>
+        
+        <Button x:Name="btnScan" Content="Scan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="682,452,0,0" Height="100" Click="btnScan_Click"/>
+        <Button x:Name="btnChangeDir" Content="Change Directory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="171,452,0,0" Height="30" Click="btnChangeDir_Click"/>
+
+    </Grid>
+</Window>
