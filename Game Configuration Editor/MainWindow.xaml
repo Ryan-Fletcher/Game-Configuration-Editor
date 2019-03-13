@@ -7,21 +7,35 @@
         mc:Ignorable="d"
         Title="GEST" Height="600" Width="800">
     <Grid>
-        <Canvas x:Name="cvsConfigScreen" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="343" Margin="439,10,0,0"/>
-        <Canvas x:Name="cvsInstalledGamesScreen" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="424" Margin="10,10,0,0"/>
-
-        <GroupBox x:Name="grbFormats" Header="File Format" HorizontalAlignment="Left" Height="126" VerticalAlignment="Top" Width="156" Margin="10,433,0,0">
-            <Grid HorizontalAlignment="Left" Margin="0,0,-2,-12" Width="146" Height="116" VerticalAlignment="Top">
-                <CheckBox x:Name="chbINI" Content="INI" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="format_Checked" Margin="0,11,0,0"/>
-                <CheckBox x:Name="chbCNF" Content="CNF" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,31,0,0" Checked="format_Checked"/>
-                <CheckBox x:Name="chbCFG" Content="CFG" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,51,0,0" Checked="format_Checked"/>
-                <CheckBox x:Name="chbXML" Content="XML" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,71,0,0" Checked="format_Checked"/>
-                <CheckBox x:Name="chbJSON" Content="JSON" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,91,0,0" Checked="format_Checked"/>
-            </Grid>
+        <GroupBox x:Name="grbSupportedFiles" Header="Supported Files" HorizontalAlignment="Left" Height="117" VerticalAlignment="Top" Width="336" Margin="10,434,0,0" BorderBrush="#FF3C4999" FontSize="14">
+            <RichTextBox x:Name="rtbConfigFiles" HorizontalAlignment="Left" Margin="-1,4,-2,3" Width="327" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsReadOnly="True" Cursor="Arrow" Background="{x:Null}" FontSize="12">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
         </GroupBox>
-        
-        <Button x:Name="btnScan" Content="Scan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="682,452,0,0" Height="100" Click="btnScan_Click"/>
-        <Button x:Name="btnChangeDir" Content="Change Directory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="171,452,0,0" Height="30" Click="btnChangeDir_Click"/>
+
+        <Button x:Name="btnScan" Content="Scan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="351,446,0,0" Height="68" Click="btnScan_Click"/>
+        <Button x:Name="btnChangeDir" Content="Change Directory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="351,519,0,0" Height="30" Click="btnChangeDir_Click"/>
+        <TextBox x:Name="txtDestination" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="301" Margin="481,519,0,0" IsEnabled="False"/>
+
+        <GroupBox Header="Games List" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="336" Margin="10,10,0,0" BorderBrush="#FF3C4999" Cursor="Arrow" FontSize="14">
+            <StackPanel x:Name="spGameList" Margin="0,0,0,0" Height="378">
+                <RichTextBox x:Name="rtbGameConfigFiles" Height="162" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True" Cursor="Arrow" Foreground="Black" SelectionBrush="{x:Null}" FontWeight="Bold" FontSize="12" Visibility="Hidden">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="Configuration Settings" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="431" Margin="351,10,0,0" Grid.RowSpan="2" BorderBrush="#FF3C4999" FontSize="14">
+            <ScrollViewer x:Name="scvConfigSettings" HorizontalAlignment="Left" Height="377" Margin="10,10,0,0" VerticalAlignment="Top" Width="396" Grid.RowSpan="2"/>
+        </GroupBox>
 
     </Grid>
 </Window>
