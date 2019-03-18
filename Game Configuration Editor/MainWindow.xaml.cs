@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
+using System.Windows.Documents;
 
 namespace Game_Configuration_Editor
 {
@@ -38,7 +39,7 @@ namespace Game_Configuration_Editor
                 {
                     read.Add(line);
                     // Write each line to "rtbConfigFiles"
-                    rtbConfigFiles.AppendText(line + "\r");
+                    rtbSupportedFiles.AppendText(line + "\r");
                     // Read the next line
                     line = sr.ReadLine();
                 }
@@ -56,17 +57,29 @@ namespace Game_Configuration_Editor
             }
         }
 
-        private void btnGameFileClick(object sender, RoutedEventArgs e)
+        private void btnFileClick(object sender, RoutedEventArgs e)
         {
+            // Sets the newly created buttons to be designated as the same from the "btnScan_Click" function
             System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
-
+            // Collects the file destination from the buttons created in the "btnScan_click" function
             string fileURL = btn.Content.ToString();
 
-            ///////// Continue from HERE /////////
-            // Load file here
 
-            OpenFileDialog openFile = new OpenFileDialog();
+            TextRange range;
+            FileStream fStream;
 
+            // Opens the file destination if it can be found
+            if (File.Exists(fileURL))
+            {
+                // Designates where to start and end within the config file document
+                range = new TextRange(rtbConfigSettings.Document.ContentStart, rtbConfigSettings.Document.ContentEnd);
+                // Opens the file at the "fileURL" destination. This allows each button to open their designated file
+                fStream = new FileStream(fileURL, FileMode.OpenOrCreate);
+                // Loads the files within the range 
+                range.Load(fStream, System.Windows.Forms.DataFormats.Text);
+                // Closes the file
+                fStream.Close();
+            }
         }
 
         //  Allows the program to scan the current directory for the file types designated
@@ -92,7 +105,7 @@ namespace Game_Configuration_Editor
                     // Inputs the file name for each button to differentiate them
                     btnGameFile.Name = "btn" + i.ToString();
                     // Creates new event for each button that allows each button to be programmed in a separate function
-                    btnGameFile.Click += new RoutedEventHandler(btnGameFileClick);
+                    btnGameFile.Click += new RoutedEventHandler(btnFileClick);
                     // Dynamically creates a new button
                     spGameList.Children.Add(btnGameFile);
                 }
@@ -124,6 +137,19 @@ namespace Game_Configuration_Editor
                 // Represents the folder from which the browser starts from
                 Environment.SpecialFolder root = browse.RootFolder;
             }   
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            ///// CONTINUE FROM HERE /////
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text file (*.txt)|*.txt|C# file (*.cs)|*.cs";
+
+            //if (saveFileDialog.ShowDialog() == true)
+            //{
+            //    File.WriteAllText(saveFileDialog.FileName, );
+            //}
         }
     }
 }

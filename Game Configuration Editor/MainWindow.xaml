@@ -8,7 +8,7 @@
         Title="GEST" Height="600" Width="800">
     <Grid>
         <GroupBox x:Name="grbSupportedFiles" Header="Supported Files" HorizontalAlignment="Left" Height="117" VerticalAlignment="Top" Width="336" Margin="10,434,0,0" BorderBrush="#FF3C4999" FontSize="14">
-            <RichTextBox x:Name="rtbConfigFiles" HorizontalAlignment="Left" Margin="-1,4,-2,3" Width="327" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsReadOnly="True" Cursor="Arrow" Background="{x:Null}" FontSize="12">
+            <RichTextBox x:Name="rtbSupportedFiles" HorizontalAlignment="Left" Margin="-1,4,-2,3" Width="327" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsReadOnly="True" Cursor="Arrow" Background="{x:Null}" FontSize="12" FontStyle="Italic">
                 <FlowDocument>
                     <Paragraph>
                         <Run/>
@@ -19,22 +19,23 @@
 
         <Button x:Name="btnScan" Content="Scan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="351,446,0,0" Height="68" Click="btnScan_Click"/>
         <Button x:Name="btnChangeDir" Content="Change Directory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="351,519,0,0" Height="30" Click="btnChangeDir_Click"/>
+        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="662,446,0,0" Height="68" Click="btnSave_Click"/>
         <TextBox x:Name="txtDestination" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="301" Margin="481,519,0,0" IsEnabled="False"/>
 
         <GroupBox Header="Games List" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="336" Margin="10,10,0,0" BorderBrush="#FF3C4999" Cursor="Arrow" FontSize="14">
-            <StackPanel x:Name="spGameList" Margin="0,0,0,0" Height="378">
-                <RichTextBox x:Name="rtbGameConfigFiles" Height="162" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True" Cursor="Arrow" Foreground="Black" SelectionBrush="{x:Null}" FontWeight="Bold" FontSize="12" Visibility="Hidden">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run/>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-            </StackPanel>
+            <StackPanel x:Name="spGameList" Margin="0,0,0,0" Height="378"/>
         </GroupBox>
 
         <GroupBox Header="Configuration Settings" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="431" Margin="351,10,0,0" Grid.RowSpan="2" BorderBrush="#FF3C4999" FontSize="14">
-            <ScrollViewer x:Name="scvConfigSettings" HorizontalAlignment="Left" Height="377" Margin="10,10,0,0" VerticalAlignment="Top" Width="396" Grid.RowSpan="2"/>
+            <StackPanel x:Name="spConfigSettings" Margin="0,0,0,0" Height="378">
+                <RichTextBox x:Name="rtbConfigSettings" Height="383" MinWidth="0" FontSize="12" BorderBrush="{x:Null}" Background="{x:Null}">
+                    <FlowDocument>
+                        <Paragraph>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+            </StackPanel>
         </GroupBox>
 
     </Grid>
