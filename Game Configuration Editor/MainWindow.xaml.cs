@@ -15,12 +15,6 @@ namespace Game_Configuration_Editor
         // Used to read the file location for scanning and identifying supported config files
         List<string> read = new List<string>();
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            ConfigList();
-        }
-          
         // Writes each of the configuration files into a rich text box
         private void ConfigList()
         {
@@ -57,31 +51,32 @@ namespace Game_Configuration_Editor
             }
         }
 
-        private void btnFileClick(object sender, RoutedEventArgs e)
+        public MainWindow()
         {
-            // Sets the newly created buttons to be designated as the same from the "btnScan_Click" function
-            System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
-            // Collects the file destination from the buttons created in the "btnScan_click" function
-            string fileURL = btn.Content.ToString();
-
-
-            TextRange range;
-            FileStream fStream;
-
-            // Opens the file destination if it can be found
-            if (File.Exists(fileURL))
-            {
-                // Designates where to start and end within the config file document
-                range = new TextRange(rtbConfigSettings.Document.ContentStart, rtbConfigSettings.Document.ContentEnd);
-                // Opens the file at the "fileURL" destination. This allows each button to open their designated file
-                fStream = new FileStream(fileURL, FileMode.OpenOrCreate);
-                // Loads the files within the range 
-                range.Load(fStream, System.Windows.Forms.DataFormats.Text);
-                // Closes the file
-                fStream.Close();
-            }
+            InitializeComponent();
+            ConfigList();
         }
 
+        //  Changes the directory the scanning tool will search in
+        private void btnChangeDir_Click(object sender, RoutedEventArgs e)
+        {
+            // Creates new FolderBrowserDialog 
+            FolderBrowserDialog browse = new FolderBrowserDialog();
+            // Show the FolderBrowserDialog
+            DialogResult result = browse.ShowDialog();
+
+            // Dictates whether the "New Folder" button appears in the browser            
+            browse.ShowNewFolderButton = true;
+
+            if (result.ToString() == "OK")
+            {
+                // Inputs the path destination to the text box "txtDestination"
+                txtDestination.Text = browse.SelectedPath;
+                // Represents the folder from which the browser starts from
+                Environment.SpecialFolder root = browse.RootFolder;
+            }   
+        }  
+       
         //  Allows the program to scan the current directory for the file types designated
         private void btnScan_Click(object sender, RoutedEventArgs e)
         {
@@ -119,37 +114,48 @@ namespace Game_Configuration_Editor
             }
         }
 
-        //  Changes the directory the scanning tool will search in
-        private void btnChangeDir_Click(object sender, RoutedEventArgs e)
+        // Sets the buttons to read the data inside their file pathings to the Configuration Settings
+        private void btnFileClick(object sender, RoutedEventArgs e)
         {
-            // Creates new FolderBrowserDialog 
-            FolderBrowserDialog browse = new FolderBrowserDialog();
-            // Show the FolderBrowserDialog
-            DialogResult result = browse.ShowDialog();
+            // Sets the newly created buttons to be designated as the same from the "btnScan_Click" function
+            System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
+            // Collects the file destination from the buttons created in the "btnScan_click" function
+            string fileURL = btn.Content.ToString();
 
-            // Dictates whether the "New Folder" button appears in the browser            
-            browse.ShowNewFolderButton = true;
 
-            if (result.ToString() == "OK")
+            TextRange range;
+            FileStream fStream;
+
+            // Opens the file destination if it can be found
+            if (File.Exists(fileURL))
             {
-                // Inputs the path destination to the text box "txtDestination"
-                txtDestination.Text = browse.SelectedPath;
-                // Represents the folder from which the browser starts from
-                Environment.SpecialFolder root = browse.RootFolder;
-            }   
+                // Designates where to start and end within the config file document
+                range = new TextRange(rtbConfigSettings.Document.ContentStart, rtbConfigSettings.Document.ContentEnd);
+                // Opens the file at the "fileURL" destination. This allows each button to open their designated file
+                fStream = new FileStream(fileURL, FileMode.OpenOrCreate);
+                // Loads the files within the range 
+                range.Load(fStream, System.Windows.Forms.DataFormats.Text);
+                // Closes the file
+                fStream.Close();
+            }
         }
 
+        // Saves the text inside of the Configuration Settings as a new .ini file
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            ///// CONTINUE FROM HERE /////
-
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt|C# file (*.cs)|*.cs";
 
-            //if (saveFileDialog.ShowDialog() == true)
-            //{
-            //    File.WriteAllText(saveFileDialog.FileName, );
-            //}
+            saveFileDialog.Filter = "ini file (*.ini)|*.ini";
+            saveFileDialog.Title = "Save a configuration file";
+            saveFileDialog.ShowDialog();          
+
+            if (saveFileDialog.FileName != "")
+            {
+                using (StreamWriter sw = new StreamWriter(saveFileDialog.OpenFile()))
+                {
+                    sw.Write(new TextRange(rtbConfigSettings.Document.ContentStart, rtbConfigSettings.Document.ContentEnd).Text);
+                }
+            }                     
         }
     }
 }
