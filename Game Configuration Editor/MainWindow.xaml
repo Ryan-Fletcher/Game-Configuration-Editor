@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="GEST" Height="600" Width="800">
     <Grid>
-        <GroupBox x:Name="grbSupportedFiles" Header="Supported Files" HorizontalAlignment="Left" Height="117" VerticalAlignment="Top" Width="336" Margin="10,434,0,0" BorderBrush="#FF3C4999" FontSize="14">
-            <RichTextBox x:Name="rtbSupportedFiles" HorizontalAlignment="Left" Margin="-1,4,-2,3" Width="327" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsReadOnly="True" Cursor="Arrow" Background="{x:Null}" FontSize="12" FontStyle="Italic">
+        <GroupBox x:Name="grbSupportedFiles" Header="Supported Files" Margin="10,434,0,18" BorderBrush="#FF3C4999" FontSize="14" HorizontalAlignment="Left" Width="336">
+            <RichTextBox x:Name="rtbSupportedFiles" Margin="-1,4,-2,3" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" IsReadOnly="True" Cursor="Arrow" Background="{x:Null}" FontSize="12" FontStyle="Italic" BorderThickness="0" HorizontalAlignment="Left" Width="327" VerticalScrollBarVisibility="Auto">
                 <FlowDocument>
                     <Paragraph>
                         <Run/>
@@ -17,26 +17,34 @@
             </RichTextBox>
         </GroupBox>
 
-        <Button x:Name="btnScan" Content="Scan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="351,446,0,0" Height="68" Click="btnScan_Click"/>
-        <Button x:Name="btnChangeDir" Content="Change Directory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="351,519,0,0" Height="30" Click="btnChangeDir_Click"/>
-        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="662,446,0,0" Height="68" Click="btnSave_Click"/>
-        <TextBox x:Name="txtDestination" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" VerticalAlignment="Top" Width="301" Margin="481,519,0,0" IsEnabled="False"/>
+        <Button x:Name="btnScan" Content="Scan" Margin="351,446,0,0" Click="btnScan_Click" HorizontalAlignment="Left" Width="120" Height="68" VerticalAlignment="Top"/>
+        <Button x:Name="btnChangeDir" Content="Change Directory" Margin="351,519,0,20" Click="btnChangeDir_Click" HorizontalAlignment="Left" Width="120"/>
+        <Button x:Name="btnSave" Content="Save" Margin="662,446,10,0" Click="btnSave_Click" Height="68" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDestination" TextWrapping="Wrap" Margin="481,519,10,20" IsEnabled="False"/>
 
-        <GroupBox Header="Games List" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="336" Margin="10,10,0,0" BorderBrush="#FF3C4999" Cursor="Arrow" FontSize="14">
-            <StackPanel x:Name="spGameList" Margin="0,0,0,0" Height="378"/>
+        <GroupBox Header="Games List" Height="384" VerticalAlignment="Top" Margin="10,44,0,0" BorderBrush="#FF3C4999" Cursor="Arrow" FontSize="14" HorizontalAlignment="Left" Width="336">
+            <StackPanel x:Name="spGameList" Height="354" VerticalAlignment="Top" HorizontalAlignment="Left" Width="324" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
         </GroupBox>
 
-        <GroupBox Header="Configuration Settings" HorizontalAlignment="Left" Height="418" VerticalAlignment="Top" Width="431" Margin="351,10,0,0" Grid.RowSpan="2" BorderBrush="#FF3C4999" FontSize="14">
-            <StackPanel x:Name="spConfigSettings" Margin="0,0,0,0" Height="378">
-                <RichTextBox x:Name="rtbConfigSettings" Height="383" MinWidth="0" FontSize="12" BorderBrush="{x:Null}" Background="{x:Null}">
+        <GroupBox Header="Configuration Settings" Margin="351,44,10,0" BorderBrush="#FF3C4999" FontSize="14" BorderThickness="1" UseLayoutRounding="False" ClipToBounds="True" Height="384" VerticalAlignment="Top">
+            <StackPanel x:Name="spConfigSettings" Margin="0,0,0,5">
+                <RichTextBox x:Name="rtbConfigSettings" Height="352" MinWidth="0" FontSize="12" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto">
                     <FlowDocument>
                         <Paragraph>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-
             </StackPanel>
         </GroupBox>
+        <Menu HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="792">
+            <MenuItem Header="_File" Height="20" Width="40">
+                <Separator/>
+                <MenuItem Header="_Exit" Click="mnuExit_Click"/>
+            </MenuItem>
+            <MenuItem HorizontalAlignment="Left" VerticalAlignment="Top" Header="_Tools" Height="20" Width="40">
+                <MenuItem Header="_Instructions" Click="mnuInstructions_Click"/>
+            </MenuItem>
+        </Menu>
 
     </Grid>
 </Window>
