@@ -19,7 +19,6 @@
 
         <Button x:Name="btnScan" Content="Scan" Margin="351,446,0,0" Click="btnScan_Click" HorizontalAlignment="Left" Width="120" Height="68" VerticalAlignment="Top"/>
         <Button x:Name="btnChangeDir" Content="Change Directory" Margin="351,519,0,20" Click="btnChangeDir_Click" HorizontalAlignment="Left" Width="120"/>
-        <Button x:Name="btnSave" Content="Save" Margin="662,446,10,0" Click="btnSave_Click" Height="68" VerticalAlignment="Top"/>
         <TextBox x:Name="txtDestination" TextWrapping="Wrap" Margin="481,519,10,20" IsEnabled="False"/>
 
         <GroupBox Header="Games List" Height="384" VerticalAlignment="Top" Margin="10,44,0,0" BorderBrush="#FF3C4999" Cursor="Arrow" FontSize="14" HorizontalAlignment="Left" Width="336">
@@ -28,23 +27,27 @@
 
         <GroupBox Header="Configuration Settings" Margin="351,44,10,0" BorderBrush="#FF3C4999" FontSize="14" BorderThickness="1" UseLayoutRounding="False" ClipToBounds="True" Height="384" VerticalAlignment="Top">
             <StackPanel x:Name="spConfigSettings" Margin="0,0,0,5">
-                <RichTextBox x:Name="rtbConfigSettings" Height="352" MinWidth="0" FontSize="12" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto">
+                <RichTextBox x:Name="rtbConfigSettings" Height="359" MinWidth="0" FontSize="12" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto">
                     <FlowDocument>
-                        <Paragraph>
-                        </Paragraph>
+                        <Paragraph/>
                     </FlowDocument>
                 </RichTextBox>
             </StackPanel>
         </GroupBox>
         <Menu HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="792">
             <MenuItem Header="_File" Height="20" Width="40">
+                <MenuItem Header="_Save" Click="mnuSave_Click"/>
                 <Separator/>
                 <MenuItem Header="_Exit" Click="mnuExit_Click"/>
             </MenuItem>
+
             <MenuItem HorizontalAlignment="Left" VerticalAlignment="Top" Header="_Tools" Height="20" Width="40">
                 <MenuItem Header="_Instructions" Click="mnuInstructions_Click"/>
             </MenuItem>
         </Menu>
+
+        <ProgressBar x:Name="pbarScanTime" Height="29" Margin="503,475,26,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="txtblckTaskTime" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="579,451,0,0" Width="110"  Height="24"/>
 
     </Grid>
 </Window>

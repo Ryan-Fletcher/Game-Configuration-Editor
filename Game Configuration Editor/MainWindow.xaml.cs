@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
 using System.Windows.Documents;
+using System.Threading;
 
 namespace Game_Configuration_Editor
 {
@@ -16,39 +17,28 @@ namespace Game_Configuration_Editor
         List<string> read = new List<string>();
 
         // Writes each of the configuration files into a rich text box
-        private void ConfigList()
+        public void ConfigList()
         {
             String line;
 
-            try
-            {
-                // Pass the file path and file name to the StreamReader constructor
-                StreamReader sr = new StreamReader(Environment.CurrentDirectory + @"\ConfigFiles.txt");
+            // Pass the file path and file name to the StreamReader constructor
+            StreamReader sr = new StreamReader(Environment.CurrentDirectory + @"\ConfigFiles.txt");
 
-                // Read the first line of text
+            // Read the first line of text
+            line = sr.ReadLine();
+
+            // Continue to read until you reach end of file
+            while (line != null)
+            {
+                read.Add(line);
+                // Write each line to "rtbConfigFiles"
+                rtbSupportedFiles.AppendText(line + "\r");
+                // Read the next line
                 line = sr.ReadLine();
+            }
 
-                // Continue to read until you reach end of file
-                while (line != null)
-                {
-                    read.Add(line);
-                    // Write each line to "rtbConfigFiles"
-                    rtbSupportedFiles.AppendText(line + "\r");
-                    // Read the next line
-                    line = sr.ReadLine();
-                }
-
-                // Close the file
-                sr.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-            }
-            finally
-            {
-                Console.WriteLine("Executing finally block.");
-            }
+            // Close the file
+            sr.Close();
         }
 
         public MainWindow()
@@ -77,23 +67,44 @@ namespace Game_Configuration_Editor
             }   
         }  
        
+        
         //  Allows the program to scan the current directory for the file types designated
         private void btnScan_Click(object sender, RoutedEventArgs e)
         {
-            // Used to bring up error message safely
+            ///// CONTINUE HERE /////
+            // Brings up the error message if there is an issue scanning the documents
             try
             {
+                txtblckTaskTime.Text = "Scanning...";
+                Thread.Sleep(1000);
+                pbarScanTime.Value = 0;
+
                 // Clears the scanned list to prevent repeating buttons
                 spGameList.Children.Clear();
 
                 // Scans for the amount of files inside of ConfigFiles.txt
                 for (int i = 0; i < read.Count; i++)
                 {
+
+
                     // String array that designates which folder to search in, what to search for, and which directories to search inside of
                     string[] found = Directory.GetFiles(txtDestination.Text, read[i], SearchOption.AllDirectories);
-
                     // Creates new button 'btnGameFile'
                     System.Windows.Controls.Button btnGameFile = new System.Windows.Controls.Button();
+                    // Sets max value of the progress bar to the length of files to search for
+                    pbarScanTime.Maximum = found.Length;
+
+                    Thread.Sleep(50);
+                    Dispatcher.Invoke(() => { pbarScanTime.Value = i; });
+
+                    // If the scan cannot find other supported files in the folders, this will prevent it cutting straight to the catch error
+                    if (found.Length < 1)
+                    {
+
+                        continue;
+                    }
+
+                    txtblckTaskTime.Text = "Scanning Complete";
 
                     // Inputs the file path for each config file found into the content of each button
                     btnGameFile.Content = found[0];
@@ -102,16 +113,16 @@ namespace Game_Configuration_Editor
                     // Creates new event for each button that allows each button to be programmed in a separate function
                     btnGameFile.Click += new RoutedEventHandler(btnFile_Click);
                     // Dynamically creates a new button
-                    spGameList.Children.Add(btnGameFile);                 
+                    spGameList.Children.Add(btnGameFile);
                 }
-            }         
+            }
 
             // If an issue finding the directory occurs, display the issue to an error
-            catch
+            catch 
             {
-                // Displays the error to a message box
-                System.Windows.Forms.MessageBox.Show("Cannot find file path", "ERROR: Cannot find file", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
+                txtblckTaskTime.Text = "";
+                // Create a message box with the following error
+                System.Windows.Forms.MessageBox.Show("Select a directory", "ERROR: Cannot find file", MessageBoxButtons.OK, MessageBoxIcon.Error);              
             }
         }
 
@@ -142,7 +153,7 @@ namespace Game_Configuration_Editor
         }
 
         // Saves the text inside of the Configuration Settings as a new .ini file
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void mnuSave_Click(object sender, RoutedEventArgs e)
         {
             string rtbText = new TextRange(rtbConfigSettings.Document.ContentStart, rtbConfigSettings.Document.ContentEnd).Text;
 
@@ -151,6 +162,7 @@ namespace Game_Configuration_Editor
                 System.Windows.Forms.MessageBox.Show("No configuration settings found", "ERROR: Nothing to save", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             else
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -171,20 +183,22 @@ namespace Game_Configuration_Editor
             }
         }
 
+        // Exits the program
         private void mnuExit_Click(object sender, RoutedEventArgs e)
         {
-            System.Environment.Exit(1);
+            Environment.Exit(1);
         }
 
+        // Lists the instructions on how to use the program
         private void mnuInstructions_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show("1. Click 'Change Directory' to select a folder to scan through \n" +
-                "2. Press 'Scan' to search through the previously selected directory \n" +
+            System.Windows.Forms.MessageBox.Show("1. Click Change Directory to select a folder to scan through \n" +
+                "2. Press Scan to search through the previously selected directory \n" +
                 "3. Select the configuration file found to begin editing \n" +
                 "4. The selected file will appear in the right-side panel, here you can edit the configuration file \n" +
-                "5. When finished, press 'Save' to save a new .ini file \n\n" +
-                "Supported configuration files are shown on the bottom-left \n" +
-                "To add more configuration files to the program, insert the configuration file to ConfigFiles.txt", "Tutorial");
+                "5. When finished, open File and click Save to save a new .ini file \n\n" +
+                "Supported configuration files are shown on the bottom-left. \n" +
+                "To add more configuration files to the program, insert the configuration file to ConfigFiles.txt.", "Tutorial");
         }
     }
 }
