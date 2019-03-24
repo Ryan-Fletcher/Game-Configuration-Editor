@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Game_Configuration_Editor"
         mc:Ignorable="d"
         Title="GEST" Height="600" Width="800">
     <Grid>
@@ -34,20 +33,17 @@
                 </RichTextBox>
             </StackPanel>
         </GroupBox>
+
         <Menu HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="792">
             <MenuItem Header="_File" Height="20" Width="40">
                 <MenuItem Header="_Save" Click="mnuSave_Click"/>
                 <Separator/>
                 <MenuItem Header="_Exit" Click="mnuExit_Click"/>
             </MenuItem>
-
+            
             <MenuItem HorizontalAlignment="Left" VerticalAlignment="Top" Header="_Tools" Height="20" Width="40">
                 <MenuItem Header="_Instructions" Click="mnuInstructions_Click"/>
             </MenuItem>
         </Menu>
-
-        <ProgressBar x:Name="pbarScanTime" Height="29" Margin="503,475,26,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="txtblckTaskTime" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="579,451,0,0" Width="110"  Height="24"/>
-
     </Grid>
 </Window>
